@@ -32,3 +32,9 @@ struct SwiftDataTodoApp: App {
         .modelContainer(sharedModelContainer)
     }
 }
+
+#Preview {
+    ProjectListView()
+        .modelContainer(for: [Project.self, TodoItem.self, Tag.self], inMemory: true)
+
+}

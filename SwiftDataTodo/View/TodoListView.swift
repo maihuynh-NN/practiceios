@@ -40,18 +40,35 @@ struct TodoListView: View {
             // 1. delete functonality
             List {
                 ForEach(project.items) { item in
-                    HStack {
-                        Button(action: {
-                            item.isCompleted.toggle()
-                        }) {
+                    NavigationLink(destination: ManageTagsView(todoItem: item)) {
+                        HStack {
                             Image(systemName: item.isCompleted ? "checkmark.circle.fill" : "circle")
+                                .onTapGesture {
+                                    // Make the checkmark tappable directly in the list.
+                                    item.isCompleted.toggle()
+                                }
+                            
+                            VStack(alignment: .leading) {
+                                Text(item.title)
+                                
+                                // Display the tags for this item if any exist.
+                                if !item.tags.isEmpty {
+                                    HStack {
+                                        // Sort the tags alphabetically for a consistent order.
+                                        ForEach(item.tags.sorted(by: { $0.name < $1.name })) { tag in
+                                            Text(tag.name)
+                                                .font(.caption)
+                                                .padding(4)
+                                                .background(Color.gray.opacity(0.2))
+                                                .cornerRadius(5)
+                                        }
+                                    }
+                                }
+                            }
                         }
-                        
-                        Text(item.title)
                     }
                 }
                 .onDelete(perform: deleteItems)
-                // .onDelete passes IdexSet, tells which indices in project.items in the list the user swiped-to-delete.
             }
             
             // 2. add to new list
