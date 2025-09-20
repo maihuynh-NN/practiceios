@@ -58,6 +58,7 @@ struct ProjectListView: View {
             } // end of Vstack
             .navigationTitle("Projectt")
             .toolbar {
+                
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button(action: {
                         themeManager.toggleTheme()
@@ -65,6 +66,13 @@ struct ProjectListView: View {
                         Image(systemName: themeManager.isDarkMode ? "sun.max" : "moon")
                     }
                 }
+                
+                ToolbarItem(placement: .navigationBarLeading) {
+                    NavigationLink(destination: FavoritesAndSearchView().environmentObject(themeManager)) {
+                        Image(systemName: "star")
+                    }
+                }
+
             }
 
         } // end of NavigationStack
