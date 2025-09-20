@@ -9,6 +9,7 @@ struct ManageTagsView: View {
     // Fetch all available tags from the database to display them as options.
     @Query(sort: \Tag.name) private var allTags: [Tag]
     @Environment(\.modelContext) private var modelContext
+    @EnvironmentObject var themeManager: ThemeManager
     
     @State private var newTagName = ""
 

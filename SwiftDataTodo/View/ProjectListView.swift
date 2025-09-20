@@ -16,6 +16,7 @@ struct ProjectListView: View {
     ) private var projects: [Project]
     
     @State private var newProjectName = ""
+    @EnvironmentObject var themeManager: ThemeManager
     
     private func deleteProjects(offsets: IndexSet) {
         for index in offsets {
@@ -56,6 +57,15 @@ struct ProjectListView: View {
                 }
             } // end of Vstack
             .navigationTitle("Projectt")
+            .toolbar {
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button(action: {
+                        themeManager.toggleTheme()
+                    }) {
+                        Image(systemName: themeManager.isDarkMode ? "sun.max" : "moon")
+                    }
+                }
+            }
 
         } // end of NavigationStack
     }
@@ -64,9 +74,8 @@ struct ProjectListView: View {
 
 
 #Preview {
-
-    
-    
+ 
     ProjectListView()
+        .environmentObject(ThemeManager())
         .modelContainer(for: Project.self, inMemory: true)
 }

@@ -10,6 +10,8 @@ import SwiftData
 
 @main
 struct SwiftDataTodoApp: App {
+    @StateObject private var themeManager = ThemeManager()
+    
     var sharedModelContainer: ModelContainer = {
         let schema = Schema([
             Project.self,
@@ -28,6 +30,8 @@ struct SwiftDataTodoApp: App {
     var body: some Scene {
         WindowGroup {
             ProjectListView()
+                .environmentObject(themeManager)
+                .preferredColorScheme(themeManager.isDarkMode ? .dark : .light)
         }
         .modelContainer(sharedModelContainer)
     }

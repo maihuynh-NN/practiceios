@@ -13,6 +13,8 @@ struct TodoListView: View {
     
     @Environment(\.modelContext) private var modelContext
     @State private var newTodoTitle = ""
+    // 1. theme
+    @EnvironmentObject var themeManager: ThemeManager
     
     private func addTodoItem() {
         // 1. define
@@ -40,7 +42,8 @@ struct TodoListView: View {
             // 1. delete functonality
             List {
                 ForEach(project.items) { item in
-                    NavigationLink(destination: ManageTagsView(todoItem: item)) {
+                    NavigationLink(destination: ManageTagsView(todoItem: item)
+                        .environmentObject(themeManager)) {
                         HStack {
                             Image(systemName: item.isCompleted ? "checkmark.circle.fill" : "circle")
                                 .onTapGesture {
