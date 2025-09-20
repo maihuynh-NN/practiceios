@@ -44,12 +44,20 @@ struct TodoListView: View {
                 ForEach(project.items) { item in
                     NavigationLink(destination: ManageTagsView(todoItem: item)
                         .environmentObject(themeManager)) {
+                            
                         HStack {
                             Image(systemName: item.isCompleted ? "checkmark.circle.fill" : "circle")
                                 .onTapGesture {
                                     // Make the checkmark tappable directly in the list.
                                     item.isCompleted.toggle()
                                 }
+                            
+                            // 2. Add favorite button
+                              Image(systemName: item.isFavorite ? "heart.fill" : "heart")
+                                  .foregroundColor(item.isFavorite ? .red : .gray)
+                                  .onTapGesture {
+                                      item.isFavorite.toggle()
+                                  }
                             
                             VStack(alignment: .leading) {
                                 Text(item.title)
@@ -69,6 +77,7 @@ struct TodoListView: View {
                                 }
                             }
                         }
+                            
                     }
                 }
                 .onDelete(perform: deleteItems)
